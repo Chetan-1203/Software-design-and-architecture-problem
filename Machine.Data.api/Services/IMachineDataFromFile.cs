@@ -7,6 +7,7 @@ namespace Machine.Data.api.Services
         IEnumerable<Asset> AssetNamesByMachineType(string filepath ,string machineType);
         IEnumerable<Asset> MachineTypesByAssestName(string filepath, string assetName);
         IEnumerable<Asset>MachineTypesByLatestSeriesOfAsset(string filepath);
+        IEnumerable<Asset>GetAllMachineData(string filepath);
 
        
 

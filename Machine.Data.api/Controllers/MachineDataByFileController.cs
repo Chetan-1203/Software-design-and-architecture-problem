@@ -15,7 +15,20 @@ namespace Machine.Data.api.Controllers
             _machineData = machineData;
         }
 
-        [HttpGet("/asset-machinetypes")]
+        /// <summary>
+        /// Get all machine data
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <returns></returns>
+        [HttpGet()]
+        public ActionResult<IEnumerable<Asset>> GetMachinesData(string filepath)
+        {
+            var allMachineData = _machineData.GetAllMachineData(filepath);
+
+            return new OkObjectResult(allMachineData);
+        }
+
+        [HttpGet("asset-machinetypes")]
         public  ActionResult<IEnumerable<Asset>> GetAssetNamesByMachineTypes(string filepath, string machineType)
         {
             var assetNameByMachineType = _machineData.AssetNamesByMachineType(filepath, machineType);
@@ -24,7 +37,7 @@ namespace Machine.Data.api.Controllers
         }
 
 
-        [HttpGet("/machine-assetname")]
+        [HttpGet("machine-assetname")]
         public ActionResult<IEnumerable<Asset>> GetMachineByAssetName(string filepath, string assetName)
         {
             var machineTypeByAssetName = _machineData.MachineTypesByAssestName(filepath, assetName);
@@ -33,7 +46,7 @@ namespace Machine.Data.api.Controllers
         }
 
 
-        [HttpGet("/latest-series")]
+        [HttpGet("latest-series")]
         public ActionResult<IEnumerable<Asset>> GetLatestSeries(string filepath)
         {
             var GetLatestSeries = _machineData.MachineTypesByLatestSeriesOfAsset(filepath);

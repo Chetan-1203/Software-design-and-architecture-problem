@@ -1,4 +1,5 @@
 ﻿using Machine.Data.api.Entity;
+using Newtonsoft.Json;
 using System.Linq;
 using System.Text.Json;
 
@@ -39,8 +40,8 @@ namespace Machine.Data.api.Services
                 else
                 {
                     string json = File.ReadAllText(filePath);
-                    allMachineData = JsonSerializer.Deserialize<List<Asset>>(json);
-
+                   // allMachineData = JsonSerializer.Deserialize<List<Asset>>(json);
+                    allMachineData = JsonConvert.DeserializeObject<List<Asset>>(json);  
 
                 }
                 return allMachineData;
@@ -109,9 +110,16 @@ namespace Machine.Data.api.Services
             return latestVersionOfMachine.Values.ToList();
         }
 
-       
+        public IEnumerable<Asset> GetAllMachineData(string filepath)
+        {
+            var assetData = GetFileData(filepath);
+            if (assetData != null)
+            {
+                return assetData.ToList<Asset>();
 
-     
+            }
 
+            return new List<Asset>();
+        }
     }
 }
