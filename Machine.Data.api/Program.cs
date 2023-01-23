@@ -11,8 +11,7 @@ builder.Services.AddControllers();
 
 
 
-builder.Services.AddScoped<IMachineDataFromFile ,MachineDataFromFile>();
-builder.Services.AddScoped<IMachineDataFromDatabase ,MachineDataFromDatabase>();
+builder.AddScoped();
 builder.Services.AddEndpointsApiExplorer();
 builder.AddFilters();
 builder.SwaggerXmlComments();

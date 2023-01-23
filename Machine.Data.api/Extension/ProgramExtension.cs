@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
+using Machine.Data.api.Services;
 
 namespace Machine.Data.api.Extension;
 
@@ -27,6 +28,12 @@ public static class ProgramExtension
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             setupAction.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
+    }
+
+    public static void AddScoped(this WebApplicationBuilder webBuilder)
+    {
+        webBuilder.Services.AddScoped<IMachineDataFromFile, MachineDataFromFile>();
+        webBuilder.Services.AddScoped<IMachineDataFromDatabase, MachineDataFromDatabase>();
     }
 }
 
