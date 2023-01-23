@@ -39,13 +39,12 @@ namespace Machine.Data.api.Services
                 else
                 {
                     string json = File.ReadAllText(filePath);
-                   // allMachineData = JsonSerializer.Deserialize<List<Asset>>(json);
-                    allMachineData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Asset>>(json);
+                    allMachineData = JsonSerializer.Deserialize<List<Asset>>(json);
+
+
                 }
                 return allMachineData;
             }
-               
-            
             else
             {
                 Console.WriteLine("File not found");
@@ -110,16 +109,9 @@ namespace Machine.Data.api.Services
             return latestVersionOfMachine.Values.ToList();
         }
 
-        public IEnumerable<Asset> GetAllMachineData(string filepath)
-        {
-            var assetData = GetFileData(filepath);
-            if (assetData != null)
-            {
-                return assetData.ToList<Asset>();
+       
 
-            }
+     
 
-            return new List<Asset>();
-        }
     }
 }
