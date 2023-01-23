@@ -1,6 +1,6 @@
 using Machine.Data.api.Extension;
 using Machine.Data.api.Services;
-using System.Reflection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +12,7 @@ builder.Services.AddControllers();
 
 
 builder.Services.AddScoped<IMachineDataFromFile ,MachineDataFromFile>();
+builder.Services.AddScoped<IMachineDataFromDatabase ,MachineDataFromDatabase>();
 builder.Services.AddEndpointsApiExplorer();
 builder.AddFilters();
 builder.SwaggerXmlComments();

@@ -16,7 +16,7 @@ public static class ProgramExtension
             setupAction.Filters.Add(new ProducesDefaultResponseTypeAttribute());
             setupAction.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status401Unauthorized));
 
-            setupAction.Filters.Add(new AuthorizeFilter());
+            
         });
     }
 
