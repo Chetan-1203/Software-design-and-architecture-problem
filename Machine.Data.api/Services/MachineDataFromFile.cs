@@ -87,21 +87,23 @@ namespace Machine.Data.api.Services
           
             if (assetData != null)
                 foreach (var asset in assetData)
-                { 
-                    var machineNameByAssetName = MachineTypesByAssestName(filepath, asset.AssetName).ToList();//(List<Asset>)MachineTypesByAssestName(filepath, asset.AssetName);
-                    machineNameByAssetName = machineNameByAssetName.OrderByDescending(asset => int.Parse(asset.SeriesNumber.Substring(1))).ToList();
-
-                    if (!machineType.Contains(machineNameByAssetName[0].MachineName) && !latestVersionOfMachine.ContainsKey(machineNameByAssetName[0].AssetName))
+                {
+                    if (!latestVersionOfMachine.ContainsKey(asset.AssetName))
                     {
-                        latestVersionOfMachine.Add(machineNameByAssetName[0].AssetName,machineNameByAssetName[0]);
-                        for (int j = 1; j < machineNameByAssetName.Count; j++)
+                        var machineNameByAssetName = MachineTypesByAssestName(filepath, asset.AssetName).ToList();//(List<Asset>)MachineTypesByAssestName(filepath, asset.AssetName);
+                        machineNameByAssetName = machineNameByAssetName.OrderByDescending(asset => int.Parse(asset.SeriesNumber.Substring(1))).ToList();
+
+                        if (!machineType.Contains(machineNameByAssetName[0].MachineName))
                         {
-                            machineType.Add(machineNameByAssetName[j].MachineName);
+                            latestVersionOfMachine.Add(machineNameByAssetName[0].AssetName, machineNameByAssetName[0]);
+                            for (int j = 1; j < machineNameByAssetName.Count; j++)
+                            {
+                                machineType.Add(machineNameByAssetName[j].MachineName);
+                            }
+
+
                         }
-
-
                     }
-                 
                 }
 
             return latestVersionOfMachine.Values.ToList();
