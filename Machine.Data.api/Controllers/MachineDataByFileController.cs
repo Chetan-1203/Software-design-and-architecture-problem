@@ -18,8 +18,8 @@ namespace Machine.Data.api.Controllers
         /// <summary>
         /// Get all machine data
         /// </summary>
-        /// <param name="filepath"></param>
-        /// <returns></returns>
+        /// <param name="filepath">filepath of text or json</param>
+        /// <returns>all machine data with asset name and version</returns>
         [HttpGet()]
         public ActionResult<IEnumerable<Asset>> GetMachinesData(string filepath)
         {
@@ -28,6 +28,12 @@ namespace Machine.Data.api.Controllers
             return new OkObjectResult(allMachineData);
         }
 
+        /// <summary>
+        /// Get asset names by machine types
+        /// </summary>
+        /// <param name="filepath">filepath of text or json</param>
+        /// <param name="machineType">value of machine name</param>
+        /// <returns>assets of given machine types</returns>
         [HttpGet("asset-machinetypes")]
         public  ActionResult<IEnumerable<Asset>> GetAssetNamesByMachineTypes(string filepath, string machineType)
         {
@@ -36,7 +42,12 @@ namespace Machine.Data.api.Controllers
             return new OkObjectResult(assetNameByMachineType);
         }
 
-
+        /// <summary>
+        /// Get all machines by asset names
+        /// </summary>
+        /// <param name="filepath">filepath of text or json</param>
+        /// <param name="assetName">value of asset name</param>
+        /// <returns>machines of given asset names</returns>
         [HttpGet("machine-assetname")]
         public ActionResult<IEnumerable<Asset>> GetMachineByAssetName(string filepath, string assetName)
         {
@@ -45,6 +56,11 @@ namespace Machine.Data.api.Controllers
             return new OkObjectResult(machineTypeByAssetName);
         }
 
+        /// <summary>
+        /// Get latest series of machine
+        /// </summary>
+        /// <param name="filepath">filepath of text or json</param>
+        /// <returns>latest version of machine</returns>
 
         [HttpGet("latest-series")]
         public ActionResult<IEnumerable<Asset>> GetLatestSeries(string filepath)
