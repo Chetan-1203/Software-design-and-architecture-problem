@@ -1,4 +1,4 @@
-using Machine.Data.api;
+using Machine.Data.api.Extension;
 using Machine.Data.api.Services;
 using System.Reflection;
 
@@ -14,12 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IMachineDataFromFile ,MachineDataFromFile>();
 builder.Services.AddEndpointsApiExplorer();
 builder.AddFilters();
-builder.Services.AddSwaggerGen(setupAction =>
-{
-    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    setupAction.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-});
-
+builder.SwaggerXmlComments();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
