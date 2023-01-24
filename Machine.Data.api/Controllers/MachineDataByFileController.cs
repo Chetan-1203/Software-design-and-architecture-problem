@@ -6,6 +6,7 @@ namespace Machine.Data.api.Controllers
 {
     [ApiController]
     [Route("assets-jsonformat")]
+    [ApiExplorerSettings(GroupName ="MachineDataFromFile")]
     public class MachineDataByFileController : Controller
     {
         private readonly IMachineDataFromFile _machineData;

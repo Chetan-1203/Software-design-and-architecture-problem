@@ -6,6 +6,7 @@ namespace Machine.Data.api.Controllers
 {
     [ApiController]
     [Route("assets-database")]
+    [ApiExplorerSettings(GroupName = "MachineDataFromDatabase")]
     public class MachineDataByDatabaseController : Controller
     {
         private readonly IMachineDataFromDatabase _machineData;

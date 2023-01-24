@@ -1,5 +1,6 @@
 using Machine.Data.api.Extension;
 using Machine.Data.api.Services;
+using Microsoft.Extensions.Options;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,7 @@ builder.Services.AddControllers();
 
 
 
-builder.AddScoped();
+builder.LifeCycleMethods();
 builder.Services.AddEndpointsApiExplorer();
 builder.AddFilters();
 builder.SwaggerXmlComments();
@@ -21,13 +22,23 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+
+        options.SwaggerEndpoint("/swagger/MachineDataFromFile/swagger.json", "MachineData (File)");
+        options.SwaggerEndpoint("/swagger/MachineDataFromDatabase/swagger.json", "MachineData (Database)");      
+        options.DefaultModelExpandDepth(2);
+        options.DefaultModelRendering(Swashbuckle.AspNetCore.SwaggerUI.ModelRendering.Model);
+        options.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+        options.EnableDeepLinking();
+        options.DisplayOperationId();
+    });
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
