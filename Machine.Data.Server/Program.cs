@@ -1,4 +1,5 @@
-using Machine.Data.Server.Data;
+
+using Machine.Data.Server.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -7,8 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
-
+builder.Services.AddHttpClient<IMachineDataFromFile,MachineDataFromFile>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5161/");
+});
+builder.Services.AddHttpClient<IMachineDataFromDatabase, MachineDataFromDatabase>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5161/");
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -19,7 +26,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
