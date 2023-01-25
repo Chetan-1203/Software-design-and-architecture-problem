@@ -7,14 +7,13 @@ namespace Machine.Data.Server.Pages
     public class DataFromDatabaseBase :ComponentBase
     {
         [Inject]
-        private IMachineDataFromDatabase MachineDataFromDataBase { get; set; }
-
-
-        [Parameter]
-        public string MachineType { get; set; }
+        private IMachineDataFromDatabase MachineDataFromDataBase { get; set; } 
 
         [Parameter]
-        public string AssetType { get; set; } 
+        public string ?MachineType { get; set; }
+
+        [Parameter]
+        public string? AssetType { get; set; } 
         public IEnumerable<Asset>? Assets { get; set; }
 
 
