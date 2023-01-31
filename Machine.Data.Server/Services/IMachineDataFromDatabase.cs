@@ -8,5 +8,7 @@ namespace Machine.Data.Server.Services
         Task<IEnumerable<Asset>> GetAssetsByMachineType(string machineType);
         Task<IEnumerable<Asset>> GetMachineByAssetType(string assetType);
         Task<IEnumerable<Asset>> GetLatestVersion();
+        Task LoadMachineData();
+        Task DeleteMachineData();
     }
 }

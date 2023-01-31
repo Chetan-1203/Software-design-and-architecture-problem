@@ -1,6 +1,10 @@
 ﻿using Machine.Data.api.Entity;
+using Machine.Data.api.Properties;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 using SharpCompress.Common;
+using System.Runtime.InteropServices;
 
 namespace Machine.Data.api.Services
 {
@@ -9,12 +13,47 @@ namespace Machine.Data.api.Services
         private readonly IConfiguration _configuration;
         private readonly MongoClient _mongoClient;
         private readonly IMongoCollection<Asset> _mongoCollection;
+        string filePath;
         public MachineDataFromDatabase(IConfiguration configuration)
         {
             _configuration = configuration;
             _mongoClient = new MongoClient(_configuration["Database:ConnectionString"]);
             var _MongoDatabase = _mongoClient.GetDatabase(_configuration["Database:DatabaseName"]);
             _mongoCollection = _MongoDatabase.GetCollection<Asset>(_configuration["Database:CollectionName"]);
+             filePath = @"C:\Users\Badg_Che\source\repos\Software design and architecture problem\Machine.Data.api\Resources\matrix.txt";
+          
+       
+           
+        }
+        public  async Task  InsertMachineData()
+        {
+            List<string> machineData=new List<string>();  
+            if (filePath.EndsWith(".txt"))
+            {
+
+                string[] machines = File.ReadAllLines(filePath);
+
+                foreach (string machine in machines)
+                {
+                    machineData = machine.Split(",").ToList();
+                    Asset asset = new Asset()
+                    {
+                        MachineName = machineData[0].Trim(),
+                        AssetName = machineData[1].Trim(),
+                        SeriesNumber = machineData[2].Trim()
+
+                    };
+
+                     await _mongoCollection.InsertOneAsync(asset);
+
+                }
+            }
+            else
+            {
+                string json = File.ReadAllText(filePath);
+                var allMachineData = JsonConvert.DeserializeObject<List<Asset>>(json);
+                await _mongoCollection.InsertManyAsync(allMachineData);   
+            }
         }
         public async Task<IEnumerable<Asset>> AssetNamesByMachineType(string machineType)
         {
@@ -25,6 +64,7 @@ namespace Machine.Data.api.Services
 
             return await _mongoCollection.Find(asset => asset.MachineName.Equals(machineType)).ToListAsync();
 
+            
         }
 
         public async Task<IEnumerable<Asset>> GetAllMachineData()
@@ -75,6 +115,11 @@ namespace Machine.Data.api.Services
             return latestVersionOfMachine.Values.ToList();
         }
 
-        
+        public async Task DeleteMachineData()
+        {
+
+
+            await _mongoCollection.DeleteManyAsync(asset => true);
+        }
     }
 }

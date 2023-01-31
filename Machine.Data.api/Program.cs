@@ -25,13 +25,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options =>
     {
 
-        options.SwaggerEndpoint("/swagger/MachineDataFromFile/swagger.json", "MachineData (File)");
-        options.SwaggerEndpoint("/swagger/MachineDataFromDatabase/swagger.json", "MachineData (Database)");      
+       
         options.DefaultModelExpandDepth(2);
         options.DefaultModelRendering(Swashbuckle.AspNetCore.SwaggerUI.ModelRendering.Model);
         options.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
         options.EnableDeepLinking();
-        options.DisplayOperationId();
+        
     });
 
     //app.UseHttpsRedirection();

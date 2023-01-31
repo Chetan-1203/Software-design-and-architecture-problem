@@ -7,3 +7,4 @@ C60, Cutter head, S8
 C60, Clamping fixture, S2
 C40, Blade safety cover, S11
 C40, Shutter gripper, S3 
+C50,Fixture,S3

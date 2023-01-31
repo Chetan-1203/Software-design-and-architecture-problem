@@ -8,10 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddHttpClient<IMachineDataFromFile,MachineDataFromFile>(client =>
-{
-    client.BaseAddress = new Uri("http://localhost:5161/");
-});
+
 builder.Services.AddHttpClient<IMachineDataFromDatabase, MachineDataFromDatabase>(client =>
 {
     client.BaseAddress = new Uri("http://localhost:5161/");

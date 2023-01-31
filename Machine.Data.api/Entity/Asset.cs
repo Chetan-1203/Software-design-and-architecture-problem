@@ -7,6 +7,8 @@ namespace Machine.Data.api.Entity
     {
         [BsonId, BsonRepresentation(BsonType.ObjectId)] 
         public string Id { get; set; }
+
+
         /// <summary>
         /// Machine Type
         /// </summary>
